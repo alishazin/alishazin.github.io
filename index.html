@@ -1,66 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<meta name="description" content="BMI Calculator">
+<meta name="author" content="Ali Shazin">
+<meta name="keywords" content="BMI, bmi, health check, weight loss, skinny">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/png" href="icon.PNG">
 <style>
-#content {
+h1 {
+    padding: 20px;
+    background-color: orangered;
+    color: white;
+    border-radius: 10px;
+}
+.content {
+    width: 250px;
+    height: 350px;
     margin: auto;
+    background-color: white;
+    border: 2px solid orangered;
+    border-radius: 20px;
+}
+.textfield {
+    margin-top: 20px;
+    height: 20px;
+    text-indent: 5px;
+}
+.textfield:focus {
+    border: 2px solid blue;
+}
+#bmibutt {
+    height: 35px;
+    background-color: red;
+    color: white;
+    border: 1px solid black;
+    margin-top: 20px;
+}
+#bmibutt:hover {
+    background-color: tomato;
+    cursor: pointer;
+}
+#bmibutt:active {
+    border: none;
+}
+table {
+    margin-top: 20px;
+}
+th, td {
+    padding: 5px;
+} 
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+.Result {
+    margin-top: 15px;
+}
+#bottomlayout {
+    text-align: center;
+    padding: 5px;
+    background-color: white;
+    margin-top: 20px;
+    border-radius: 10px;
+    border: 2px solid orangered;
 }
 </style>
 </head>
-<body>
+<body style="background-color: gainsboro;">
 
-<div id="content" align="center">
-<h1>Live Location</h1>
-<p>Use a smartphone for proper result</p>
-<button onclick="livePosition()">Try It</button>
-<button onclick="stopPosition()">Stop</button>
-<p id="output"></p>
+<h1>BMI Calculator</h1>
+
+<div class="content" align="center">
+<input type="number" class="textfield" id="height" placeholder="Enter height(cm)" title="height(cm)" size="20"><br>
+<input type="number" class="textfield" id="weight" placeholder="Enter weight(kg)" title="weight(kg)" size="20"><br>
+<button id="bmibutt" onclick="computeBMI()">Compute BMI</button>
+<table>
+    <tr id="under">
+        <th>&lt;18.5</th>
+        <td>Under Weight</td>
+    </tr>
+    <tr id="normal">
+        <th>18.5-24.9</th>
+        <td>Normal Weight</td>
+    </tr>
+    <tr id="over">
+        <th>25-29.9</th>
+        <td>Over Weight</td>
+    </tr>
+    <tr id="obese">
+        <th>&gt;30</th>
+        <td>Obese</td>
+    </tr>
+</table>
+<label class="Result" for="result">Result:</label>
+<input type="text" id="result" size="4" style="font-weight: bold;" class="Result" readonly>
 </div>
 
+<div id="bottomlayout">
+    <p>&copy; bmicalculator</p>
+</div>
 <script>
-
-var out = document.getElementById("output");
-var id;
-
-function livePosition() {
-    if (navigator.geolocation) {
-       id = navigator.geolocation.watchPosition(showLiveposition,anyError);
-    } else {
-        out.innerHTML = "Browser doesn't Support Geolocation";
+function computeBMI() {
+    clearColor(0)
+    var height = document.getElementById("height").value;
+    var weight = document.getElementById("weight").value;
+    if (height > 0 && weight > 0) {
+        var result_space = document.getElementById("result");
+        var heightby100 = height/100; 
+        var result = (weight / heightby100 * 1 / heightby100).toFixed(1);
+        if (result > 0 && result != Infinity) {
+            if (result < 18.5) {
+                document.getElementById("under").style.color = 'red';
+            } else if (result<=25) {
+                document.getElementById("normal").style.color = 'red';
+            } else if (result<=30) {
+                document.getElementById("over").style.color = 'red';
+            } else if (result>30) {
+                document.getElementById("obese").style.color = 'red';
+            }
+        } else {
+            clearColor(1);
+            return;
+        }
+        result_space.value = result;
+        }
+    else {
+        clearColor(1);
+        return;
     }
 }
-
-function showLiveposition(pos) {
-    out.innerHTML = "Latitude: " + pos.coords.latitude +
-    "<br>Longitude: " + pos.coords.longitude;
+function clearColor(instance) {
+    if (instance == 1) {
+        alert("Invalid input!")
+    } 
+    document.getElementById("under").style.color = 'black'; 
+    document.getElementById("normal").style.color = 'black';
+    document.getElementById("over").style.color = 'black';
+    document.getElementById("obese").style.color = 'black';
+    document.getElementById("result").value = ''
 }
-
-function anyError(error) {
-    switch (error.code) {
-        case error.PERMISSION_DENIED:
-            out.innerHTML = "Grand the permission to make this work";
-            break;
-        case error.POSITION_UNAVAILABLE:
-            out.innerHTML = "Location info unavailable";
-            break;
-        case error.TIMEOUT: 
-            out.innerHTML = "Request timeout";
-            break;
-        case error.UNKNOWN_ERROR: 
-            out.innerHTML = "An unknown error has occured";
-            break;
-
-    }
-}
-
-function stopPosition() {
-    if (navigator.geolocation) {
-        navigator.geolocation.clearWatch(id);
-        out.innerHTML = 'Stopped!';
-    }
-}
-
 </script>
 
 </body>
