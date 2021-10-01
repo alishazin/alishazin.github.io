@@ -1,54 +1,66 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Calculator</title>
-<meta name="description" content="Calculator">
-<meta name="author" content="Ali Shazin">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" type="image/ico" href="icon.ico">
-<link rel='stylesheet' href="style.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-</head>
 <body>
-    <div class="container">
-        <div class="textfield">
-            <div class="top-text"></div>
-            <div class="bottom-text"><div></div></div>
-        </div>
-        <div class="keys">
-            <div class="top-row" id="ce" onclick="clearLatest()"><span>CE</span></div>
-            <div class="top-row" id="c" onclick="clearAll()">C</div>
-            <div class="top-row" id="pie" onclick="enterDigit('π')">π</div>
-            <div class="top-row" id="backspace" onclick="backspaceDigit()"><i class="bi bi-backspace"></i></div>
-            <div class="operators" id="dot" onclick="enterDigit('.')"><span>.</span></div>
-            <div class="operators" id="x-raise-y" onclick="enterDigit('^')"><p>x<sup>y</sup></p></div>
-            <div class="operators" id="x-raise-2" onclick="enterDigit('^2')"><p>x<sup>2</sup></p></div>
-            <div class="operators" id="division" onclick="enterDigit(` ${this.children[0].innerHTML} `), splitDigits(`${this.children[0].innerHTML}`)"><span>÷</span></div>
-            <div class="numbers" id="seven" onclick="enterDigit(`${this.innerHTML}`)">7</div>
-            <div class="numbers" id="eight" onclick="enterDigit(`${this.innerHTML}`)">8</div>
-            <div class="numbers" id="nine" onclick="enterDigit(`${this.innerHTML}`)">9</div>
-            <div class="operators" id="multiplication" onclick="enterDigit(` ${this.children[0].innerHTML} `), splitDigits(`${this.children[0].innerHTML}`)"><span>x</span></div>
-            <div class="numbers" id="four" onclick="enterDigit(`${this.innerHTML}`)">4</div>
-            <div class="numbers" id="five" onclick="enterDigit(`${this.innerHTML}`)">5</div>
-            <div class="numbers" id="six" onclick="enterDigit(`${this.innerHTML}`)">6</div>
-            <div class="operators" id="subtraction" onclick="enterDigit(` ${this.children[0].innerHTML} `), splitDigits(`${this.children[0].innerHTML}`)"><span>-</span></div>
-            <div class="numbers" id="one" onclick="enterDigit(`${this.innerHTML}`)">1</div>
-            <div class="numbers" id="two" onclick="enterDigit(`${this.innerHTML}`)">2</div>
-            <div class="numbers" id="three" onclick="enterDigit(`${this.innerHTML}`)">3</div>
-            <div class="operators" id="addition" onclick="enterDigit(` ${this.children[0].innerHTML} `), splitDigits(`${this.children[0].innerHTML}`)"><span>+</span></div>
-            <div class="operators" id="parenthesis">
-                <div class="operators" id="left-parenthesis" onclick="enterDigit(`${this.innerHTML}`)">(</div>
-                <div class="operators" id="right-parenthesis" onclick="enterDigit(`${this.innerHTML}`)">)</div>
-            </div>
-            <div class="numbers" id="zero" onclick="enterDigit(`${this.innerHTML}`)">0</div>
-            <div class="equals" id="equals" onclick="solveEquals()"><span>=</span></div>
-        </div>
-    </div>
+    <h1>Geolocation API</h1>
+    <button onclick="myFunc1()">Get Your Location!</button><br><br>
+    <button onclick="startLive()">Start Your Live Location</button>
+    <button onclick="stopLive()">Stop Live Location</button><br><br>
+    <p id="para"></p>
     <script>
-        const script = document.createElement('script');
-        script.src = 'script.js';
-        document.head.appendChild(script);
+        // Locate the User's Position
+
+        // Using the Geolocation API
+        // The getCurrentPosition() method is used to return the user's position.
+        function myFunc1() {
+            if (window.navigator.geolocation) { // checking if supported
+                let position = navigator.geolocation.getCurrentPosition(position => {
+                    console.log(`Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`);
+                }, errorHandler);
+            } else {
+                console.log("Not Supported");
+            }
+        }
+
+        // Handling Errors and Rejections
+        // The second parameter of the getCurrentPosition() method is used to handle errors. 
+        // It specifies a function to run if it fails to get the user's location.
+        function errorHandler(error) {
+            console.log(error.message);
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    console.log("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    console.log("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    console.log("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    console.log("An unknown error occurred.");
+            }
+        }
+
+        // watchPosition() - Returns the current position of the user and continues to 
+        // return updated position as the user moves (like the GPS in a car).
+        // clearWatch() - Stops the watchPosition() method.
+        // You need an accurate GPS device to test this (like smartphone).
+
+        var livePosition;
+
+        function startLive() {
+            const para = document.getElementById('para');
+            let livePosition = navigator.geolocation.watchPosition(position => {
+                console.log(1);
+                para.innerHTML = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
+            });
+        }
+
+        function stopLive() {
+            const para = document.getElementById('para');
+            para.innerHTML = 'Stopped';
+            navigator.geolocation.clearWatch(livePosition);
+        }
     </script>
 </body>
 </html>
