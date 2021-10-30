@@ -1,0 +1,73 @@
+.nav-bar {
+    width: 100%;
+    height: 70px;
+    background-color: var(--secondary-color);
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 0 20px;
+    border-radius: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+.nav-bar > h2 {
+    font-family: Verdana, Geneva;
+    padding-right: 30px;
+    color: var(--disabled-color);
+    margin-right: 30px;
+    border-right: 3px solid var(--disabled-color);
+}
+.nav-bar > .icon-box {
+    margin-right: 30px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.233);
+    color: white;
+    width: 45px;
+    height: 45px;
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+    transition: width 0.5s, border-radius 0.5s;
+}
+.icon-box > i {
+    font-size: 22px;
+    position: absolute;
+    bottom: 9px;
+    left: 11px;
+}
+.icon-box > span {
+    position: absolute;
+    left: 35px;
+    bottom: 12px;
+    display: none;
+    font-size: 17px;
+    font-family: Arial;
+    margin-left: 10px;
+}
+@media (max-width:500px) {
+    .nav-bar > h2 {
+        display: none;
+    }
+}
+/* For galaxy fold like devices */
+@media (max-width:300px) { 
+    .nav-bar > h2 {
+        display: none;
+    }
+    .icon-box > i {
+        font-size: 18px;
+    }
+    #home-div > i {
+        left: 8px;
+    }
+    .icon-box > span {
+        font-size: 15px;
+        margin-left: 8px;
+    }
+    .nav-bar > .icon-box {
+        height: 40px;
+        width: 40px;
+    }
+}

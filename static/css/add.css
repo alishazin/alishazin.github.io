@@ -1,0 +1,80 @@
+.box {
+    max-width: 700px;
+    margin: auto;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.box > h1 {
+    font-family: Arial;
+    text-align: center;
+    color: var(--primary-color);
+    margin-top: 50px; 
+    margin-bottom: 50px; 
+    font-size: 35px;
+}
+form > div {
+    padding: 15px, 10px;
+    margin: 30px 0;
+    display: grid;
+    grid-template-columns: 70px auto;
+    align-items: baseline;
+}
+label {
+    font-family: Verdana;
+    margin-right: 5px;
+    color: var(--light-font-color);
+}
+.fields {
+    padding: 5px 10px;
+    outline: none;
+    border: 2px solid #7a7a7a7e;
+    border-radius: 4px;
+    font-size: 15px;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+#date-id {
+    padding: 3px 10px;
+}
+#blog-id {
+    height: 400px;
+    padding: 15px;
+}
+.fields:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 1px -1px 10px var(--shadow-color-light);
+}
+form > div:last-child {
+    display: flex;
+    justify-content: right;
+}
+#submit-id {
+    border: none;
+    padding: 10px 20px;
+    font-size: 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px var(--shadow-color-light);
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+#submit-id:active {
+    background-color: var(--primary-color-light);
+}
+@media (max-width:500px) {
+    form > div {
+        display: block;
+    }
+    form > div > label {
+        display: block;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 10px;
+    }
+    .fields {
+        display: block;
+        width: 100%;
+    }
+}
